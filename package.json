@@ -1,0 +1,29 @@
+{
+	"name": "coder-hub",
+	"version": "1.0.0",
+	"description": "node+mysql的服务",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "nodemon ./src/main.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/trymybest0212/coder-hub.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/trymybest0212/coder-hub/issues"
+	},
+	"homepage": "https://github.com/trymybest0212/coder-hub#readme",
+	"dependencies": {
+		"dotenv": "^17.2.3",
+		"koa": "^3.1.1",
+		"koa-router": "^14.0.0"
+	},
+	"devDependencies": {
+		"nodemon": "^3.1.11"
+	}
+}

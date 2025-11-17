@@ -2,6 +2,8 @@ const {
 	NAME_OR_PASSWORD_IS_REQUIRE,
 	NAME_OR_PASSWORD_IS_NOT_VAILD,
 	NAME_IS_NOT_UNIQUE,
+	USER_IS_NOT_EXIST,
+	PASSWORD_IS_ERROR,
 } = require("../constant/error.type");
 const errorHandle = (error, ctx) => {
 	let status, message;
@@ -17,6 +19,14 @@ const errorHandle = (error, ctx) => {
 		case NAME_IS_NOT_UNIQUE:
 			status = 409;
 			message = "用户已存在";
+			break;
+		case USER_IS_NOT_EXIST:
+			status = 400;
+			message = "用户不存在";
+			break;
+		case PASSWORD_IS_ERROR:
+			status = 400;
+			message = "密码错误";
 			break;
 		default:
 			break;

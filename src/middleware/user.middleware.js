@@ -4,6 +4,8 @@ const {
 	NAME_IS_NOT_UNIQUE,
 } = require("../constant/error.type");
 const { getUserByName } = require("../services/user.service");
+const md5Password = require("../utils/handle-password");
+
 const verifyUser = async (ctx, next) => {
 	const nameReg = /^[a-zA-Z0-9]{6,12}$/;
 	const passwordReg =
@@ -18,7 +20,7 @@ const verifyUser = async (ctx, next) => {
 		return ctx.app.emit("error", error, ctx);
 	}
 	// 判断账号唯一
-    const result = await getUserByName(name) || [];
+	const result = (await getUserByName(name)) || [];
 	if (result[0]?.length) {
 		const error = new Error(NAME_IS_NOT_UNIQUE);
 		return ctx.app.emit("error", error, ctx);
@@ -27,6 +29,13 @@ const verifyUser = async (ctx, next) => {
 	await next();
 };
 
+const hanlePassword = async (ctx, next) => {
+	let { password } = ctx.request.body;
+    ctx.request.body.password = md5Password(password);
+	await next();
+};
+
 module.exports = {
 	verifyUser,
+	hanlePassword,
 };

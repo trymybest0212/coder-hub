@@ -18,13 +18,14 @@ const verifyLogin = async (ctx, next) => {
 	if (!result[0]?.length) {
 		const error = new Error(USER_IS_NOT_EXIST);
 		return ctx.app.emit("error", error, ctx);
-    }
-    // 密码是否正确
+	}
+	// 密码是否正确
 
 	if (result[0]?.[0].password !== md5Password(password)) {
 		const error = new Error(PASSWORD_IS_ERROR);
 		return ctx.app.emit("error", error, ctx);
 	}
+	ctx.user = result[0]?.[0] || {};
 	await next();
 };
 

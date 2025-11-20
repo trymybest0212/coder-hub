@@ -3,6 +3,7 @@ const NAME_OR_PASSWORD_IS_NOT_VAILD = 'nameOrPasswordIsNotValid'
 const NAME_IS_NOT_UNIQUE = 'nameIsNotUnique'
 const USER_IS_NOT_EXIST = 'userIsNotExist'
 const PASSWORD_IS_ERROR = 'passwordIsError'
+const NO_AUTHORIZATION = 'noAuthorization'
 
 module.exports = {
 	NAME_OR_PASSWORD_IS_REQUIRE,
@@ -10,4 +11,5 @@ module.exports = {
 	NAME_IS_NOT_UNIQUE,
 	USER_IS_NOT_EXIST,
 	PASSWORD_IS_ERROR,
+	NO_AUTHORIZATION
 };

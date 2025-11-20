@@ -4,6 +4,7 @@ const {
 	NAME_IS_NOT_UNIQUE,
 	USER_IS_NOT_EXIST,
 	PASSWORD_IS_ERROR,
+	NO_AUTHORIZATION
 } = require("../constant/error.type");
 const errorHandle = (error, ctx) => {
 	let status, message;
@@ -27,6 +28,10 @@ const errorHandle = (error, ctx) => {
 		case PASSWORD_IS_ERROR:
 			status = 400;
 			message = "密码错误";
+			break;
+			case NO_AUTHORIZATION:
+			status = 401;
+			message = "无效token";
 			break;
 		default:
 			break;

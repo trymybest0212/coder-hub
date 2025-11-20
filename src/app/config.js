@@ -14,7 +14,7 @@ const {
 } = process.env;
 
 const PRIVATE_KEY = fs.readFileSync(path.join(__dirname,'./keys/private.key'));
-const PUBLIC_KEY = fs.readFileSync(path.join(__dirname, "./keys/private.key"));
+const PUBLIC_KEY = fs.readFileSync(path.join(__dirname, "./keys/public.key"));
 
 module.exports = {
 	APP_PORT,

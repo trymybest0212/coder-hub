@@ -4,8 +4,7 @@ class UserService {
 	async createUserService(user = {}) {
 		const { name, password } = user;
 		const statement = `INSERT INTO users (name,password) VALUES (?, ?)`;
-        const result = await connection.execute(statement, [name, password]);
-        console.log(result,'111');
+        await connection.execute(statement, [name, password]);
 
 	}
 	async getUserByName(name) {

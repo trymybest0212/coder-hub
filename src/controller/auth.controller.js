@@ -16,7 +16,7 @@ class AuthController {
 				algorithm: "RS256",
 			}
 		);
-		ctx.body = JSON.stringify({ token });
+		ctx.body = JSON.stringify({ token,id,name });
 	}
 }
 

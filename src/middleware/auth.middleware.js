@@ -40,8 +40,10 @@ const verifyLogin = async (ctx, next) => {
 
 const verifyAuth = async (ctx, next) => {
 	// 获取token
-	const authorization = ctx.headers.authorization;
+	const authorization = ctx.headers?.authorization || '';
 	const token = authorization.replace('Bearer ', '')
+	console.log(token,'token');
+	
 	// 验证token
 	try {
 		const result = verify(token, PUBLIC_KEY, {
@@ -50,12 +52,9 @@ const verifyAuth = async (ctx, next) => {
 	ctx.user = result;
 	 await next();
 	} catch (err) {
-		console.log(err, '2222');
 		const error = new Error(NO_AUTHORIZATION)
 		ctx.app.emit('error',error,ctx)
 	}
-
-
 }
 module.exports = {
 	verifyLogin,

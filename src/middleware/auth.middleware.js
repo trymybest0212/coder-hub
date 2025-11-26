@@ -9,7 +9,7 @@ const {
 	getUserByName
 } = require("../services/user.service");
 const md5Password = require("../utils/handle-password");
-const PUBLIC_KEY = require('../app/config')
+const {PUBLIC_KEY} = require('../app/config')
 const {NO_AUTHORIZATION}  = require('../constant/error.type')
 
 const verifyLogin = async (ctx, next) => {

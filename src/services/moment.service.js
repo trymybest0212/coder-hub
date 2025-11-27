@@ -39,6 +39,15 @@ class UserService {
             console.log(error, '修改评论失败');
         }
     }
+    async remove(momentId) {
+ const statement = `DELETE FROM moments WHERE id = ?`
+         try {
+            const [result] = await connection.execute(statement, [momentId]);
+            return result
+        } catch (error) {
+            console.log(error, '删除评论失败');
+        }
+    }
 }
 
 module.exports = new UserService();

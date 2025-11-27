@@ -8,7 +8,8 @@ const {
     create,
     momentDetail,
     momentList,
-    momentUpdate
+    momentUpdate,
+    removeMoment
 } = require('../controller/moment.controller')
 
 const momentRouter = new Router({
@@ -19,5 +20,6 @@ momentRouter.post("/", verifyAuth, create);
 momentRouter.get("/:momentId",momentDetail);
 momentRouter.get('/',momentList);
 momentRouter.patch("/:momentId",verifyAuth,verifyPermission,momentUpdate)
+momentRouter.delete("/:momentId",verifyAuth,verifyPermission,removeMoment)
 
 module.exports = momentRouter;

@@ -19,7 +19,7 @@ const momentRouter = new Router({
 momentRouter.post("/", verifyAuth, create);
 momentRouter.get("/:momentId",momentDetail);
 momentRouter.get('/',momentList);
-momentRouter.patch("/:momentId",verifyAuth,verifyPermission,momentUpdate)
-momentRouter.delete("/:momentId",verifyAuth,verifyPermission,removeMoment)
+momentRouter.patch("/:momentId",verifyAuth,verifyPermission('moments'),momentUpdate)
+momentRouter.delete("/:momentId",verifyAuth,verifyPermission('moments'),removeMoment)
 
 module.exports = momentRouter;

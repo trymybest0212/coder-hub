@@ -1,14 +1,13 @@
 
 const connection = require("../app/database");
 class AuthService {
-    async checkMoment(momentId, userId) {
-        const statement = `SELECT m.id id, m.content content, m.createAt createTime, m.updateAt updateTime,JSON_OBJECT('id',u.id
-,'name',u.name) user FROM moments m  LEFT JOIN users u ON m.user_id  = u.id WHERE m.id = ?`;
+    async checkAuth(tableName,momentId, userId) {
+     const statement = `SELECT * FROM ${tableName} WHERE id = ? AND user_id = ?`
         try {
-            const [result] = await connection.execute(statement, [momentId]);
-            return result?.[0]?.user?.id  === userId
+            const [result] = await connection.execute(statement, [momentId,userId]);
+            return result?.length === 0 ? false: true
         } catch (error) {
-            console.log(error, 'checkMoment失败');
+            console.log(error, '权限校验失败');
         }
     }
 }

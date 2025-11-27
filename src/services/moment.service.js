@@ -1,6 +1,6 @@
 const connection = require("../app/database");
 
-class UserService {
+class MomentService {
     async createMomentService(userId, content) {
         const statement = `INSERT INTO MOMENTS (user_id,content) VALUES(?,?)`
         try {
@@ -36,7 +36,7 @@ class UserService {
             const [result] = await connection.execute(statement, [content, id]);
             return result
         } catch (error) {
-            console.log(error, '修改评论失败');
+            console.log(error, '修改动态失败');
         }
     }
     async remove(momentId) {
@@ -45,9 +45,9 @@ class UserService {
             const [result] = await connection.execute(statement, [momentId]);
             return result
         } catch (error) {
-            console.log(error, '删除评论失败');
+            console.log(error, '删除动态失败');
         }
     }
 }
 
-module.exports = new UserService();
+module.exports = new MomentService();

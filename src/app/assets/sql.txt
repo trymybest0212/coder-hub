@@ -1,0 +1,43 @@
+create table if not exists users (  
+id int primary key AUTO_INCREMENT,
+name varchar(30) NOT NULL UNIQUE,
+password varchar(50) NOT NULL,
+createAt TIMESTAMP DEFAULT   CURRENT_TIMESTAMP,
+updateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+)
+
+create table if not exists moments (
+id INT PRIMARY KEY AUTO_INCREMENT,
+content VARCHAR(1000) NOT NULL,
+user_id INT NOT NULL,
+createAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+updateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+FOREIGN KEY (user_id) REFERENCES users(id)
+ )
+
+SELECT m.id id, m.content content, m.createAt createTime, m.updateAt updateTime,JSON_OBJECT('id',u.id
+,'name',u.name) user FROM moments m  LEFT JOIN users u ON m.user_id  = u.id WHERE m.id = ?
+
+SELECT m.id id, m.content content, m.createAt createTime, m.updateAt updateTime,JSON_OBJECT('id',u.id
+,'name',u.name) user FROM moments m  LEFT JOIN users u ON m.user_id  = u.id LIMIT ? , ?
+
+
+UPDATE moments SET content = ? WHERE id = ?
+
+DELETE FROM moments WHERE id = ?
+
+
+
+
+create table if not exists comments (
+id INT PRIMARY KEY AUTO_INCREMENT,
+content VARCHAR(1000) NOT NULL,
+user_id INT NOT NULL,
+moment_id INT NOT NULL,
+comment_id INT DEFAULT NULL,
+createAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+updateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (moment_id) REFERENCES moments(id)  ON DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY (comment_id) REFERENCES comments(id)  ON DELETE CASCADE ON UPDATE CASCADE
+ );

@@ -8,7 +8,7 @@ const {
 const {
 	getUserByName
 } = require("../services/user.service");
-const {checkMoment}  = require("../services/auth.service")
+const {checkAuth}  = require("../services/auth.service")
 const md5Password = require("../utils/handle-password");
 const {PUBLIC_KEY} = require('../app/config')
 const {NO_AUTHORIZATION}  = require('../constant/error.type')
@@ -55,16 +55,19 @@ const verifyAuth = async (ctx, next) => {
 		ctx.app.emit('error',error,ctx)
 	}
 }
-const verifyPermission = async (ctx,next) => {
-	const {momentId} = ctx.params;
+const verifyPermission = (tableName) => {
+	return (async (ctx,next) => {
+	const tableKey = tableName.slice(0,-1) + 'Id';
+	const tableId = ctx.params[tableKey];
 	const {id} = ctx.user;
-	const hasPermission = await checkMoment(momentId,id);
+	const hasPermission = await checkAuth(tableName,tableId,id);
 	if(!hasPermission) {
 		const error = new Error(NO_AUTHORIZATION)
 		return ctx.app.emit('error',error,ctx)
 	}
 	await next();
 
+})
 }
 module.exports = {
 	verifyLogin,

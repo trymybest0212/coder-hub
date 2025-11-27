@@ -8,6 +8,7 @@ const {
 const {
 	getUserByName
 } = require("../services/user.service");
+const {checkMoment}  = require("../services/auth.service")
 const md5Password = require("../utils/handle-password");
 const {PUBLIC_KEY} = require('../app/config')
 const {NO_AUTHORIZATION}  = require('../constant/error.type')
@@ -42,8 +43,6 @@ const verifyAuth = async (ctx, next) => {
 	// 获取token
 	const authorization = ctx.headers?.authorization || '';
 	const token = authorization.replace('Bearer ', '')
-	console.log(token,'token');
-	
 	// 验证token
 	try {
 		const result = verify(token, PUBLIC_KEY, {
@@ -56,7 +55,19 @@ const verifyAuth = async (ctx, next) => {
 		ctx.app.emit('error',error,ctx)
 	}
 }
+const verifyPermission = async (ctx,next) => {
+	const {momentId} = ctx.params;
+	const {id} = ctx.user;
+	const hasPermission = await checkMoment(momentId,id);
+	if(!hasPermission) {
+		const error = new Error(NO_AUTHORIZATION)
+		return ctx.app.emit('error',error,ctx)
+	}
+	await next();
+
+}
 module.exports = {
 	verifyLogin,
-	verifyAuth
+	verifyAuth,
+	verifyPermission
 };

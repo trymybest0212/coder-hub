@@ -29,7 +29,7 @@ const verifyUser = async (ctx, next) => {
 	await next();
 };
 
-const hanlePassword = async (ctx, next) => {
+const handlePassword = async (ctx, next) => {
 	let { password } = ctx.request.body;
     ctx.request.body.password = md5Password(password);
 	await next();
@@ -37,5 +37,5 @@ const hanlePassword = async (ctx, next) => {
 
 module.exports = {
 	verifyUser,
-	hanlePassword,
+	handlePassword,
 };

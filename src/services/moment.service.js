@@ -30,6 +30,15 @@ class UserService {
             console.log(error, '获取列表失败');
         }
     }
+    async update(content,id) {
+        const statement = `UPDATE moments SET content = ? WHERE id = ?`
+         try {
+            const [result] = await connection.execute(statement, [content, id]);
+            return result
+        } catch (error) {
+            console.log(error, '修改评论失败');
+        }
+    }
 }
 
 module.exports = new UserService();

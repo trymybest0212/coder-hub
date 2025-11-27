@@ -4,7 +4,8 @@ const {
 	NAME_IS_NOT_UNIQUE,
 	USER_IS_NOT_EXIST,
 	PASSWORD_IS_ERROR,
-	NO_AUTHORIZATION
+	NO_AUTHORIZATION,
+	NO_PERMISSION
 } = require("../constant/error.type");
 const errorHandle = (error, ctx) => {
 	let status, message;
@@ -32,6 +33,9 @@ const errorHandle = (error, ctx) => {
 			case NO_AUTHORIZATION:
 			status = 401;
 			message = "无效token";
+			case NO_PERMISSION:
+			status = 403;
+			message = "无操作权限";
 			break;
 		default:
 			break;

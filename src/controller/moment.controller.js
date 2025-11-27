@@ -1,7 +1,8 @@
 const {
     createMomentService,
     getDetailById,
-    getMomentList
+    getMomentList,
+    update
 } = require('../services/moment.service')
 
 class momentController {
@@ -31,6 +32,16 @@ class momentController {
         const result = await getMomentList(offset, limit)
         ctx.body = result
 
+    }
+    async momentUpdate(ctx, next) {
+        const {
+            momentId
+        } = ctx.params;
+        const {
+            content
+        } = ctx.request.body
+        await update(content, momentId)
+        ctx.body = '更新成功'
     }
 }
 

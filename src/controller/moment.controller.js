@@ -3,7 +3,8 @@ const {
     getDetailById,
     getMomentList,
     update,
-    remove
+    remove,
+    addLabel
 } = require('../services/moment.service')
 
 class momentController {
@@ -50,6 +51,16 @@ class momentController {
         } = ctx.params;
         await remove(momentId)
         ctx.body = '删除成功'
+    }
+    async addMomentLabel(ctx, next) {
+        const {
+            newLabels
+        } = ctx;
+        const {
+            momentId
+        } = ctx.params;
+        await addLabel(momentId,newLabels)
+        ctx.body = "添加标签成功"
     }
 }
 

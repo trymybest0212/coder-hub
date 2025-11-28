@@ -8,7 +8,8 @@ const {
     commentCreate,
     commentReply,
     commentUpdate,
-    commentRemove
+    commentRemove,
+    commentList
 } = require('../controller/comment.controller')
 
 const commentRouter = new Router({
@@ -17,6 +18,8 @@ const commentRouter = new Router({
 
 commentRouter.post("/:momentId", verifyAuth, commentCreate);
 commentRouter.post("/:momentId/reply", verifyAuth, commentReply);
+commentRouter.get("/:momentId", commentList);
+
 commentRouter.patch("/:commentId", verifyAuth, verifyPermission('comments'), commentUpdate)
 commentRouter.delete("/:commentId", verifyAuth, verifyPermission('comments'), commentRemove)
 

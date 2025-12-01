@@ -24,8 +24,16 @@ class MomentService {
         //  WHERE m.id = ?
         //  GROUP BY m.id, m.content, m.createAt, m.updateAt, u.id, u.name`
         // 将动态和评论单独分接口返回
-        const statement = `SELECT m.id id, m.content content, m.createAt createTime, m.updateAt updateTime,JSON_OBJECT('id',u.id
-,'name',u.name) user FROM moments m  LEFT JOIN users u ON m.user_id  = u.id WHERE m.id = ?`;
+        const statement = `SELECT m.id id, m.content content, m.createAt createTime, m.updateAt updateTime,
+        JSON_OBJECT('id',u.id,'name',u.name) user,
+        IF(COUNT(l.id), JSON_ARRAYAGG(JSON_OBJECT('id',l.id,'name',l.name)) ,NULL) labels
+        FROM moments m  
+LEFT JOIN users u ON m.user_id  = u.id
+LEFT JOIN moment_labels ml ON ml.moment_id  = m.id 
+LEFT JOIN labels l ON ml.label_id  = l.id 
+WHERE m.id = ?
+ GROUP BY m.id
+`
         try {
             const [result] = await connection.execute(statement, [momentId]);
             return result[0]
@@ -34,8 +42,11 @@ class MomentService {
         }
     }
     async getMomentList(offset, limit) {
-        const statement = `SELECT m.id id, m.content content, m.createAt createTime, m.updateAt updateTime,JSON_OBJECT('id',u.id
-,'name',u.name) user,(SELECT COUNT(*) FROM comments WHERE comments.moment_id = m.id) commentCount FROM moments m  LEFT JOIN users u ON m.user_id  = u.id LIMIT ? , ?`;
+        const statement = `SELECT m.id id, m.content content, m.createAt createTime, m.updateAt updateTime,JSON_OBJECT('id',u.id,'name',u.name) user,
+(SELECT COUNT(*) FROM comments WHERE comments.moment_id = m.id) commentCount,
+(SELECT COUNT(*) FROM moment_labels ml WHERE ml.moment_id = m.id) labelCount
+ FROM moments m
+ LEFT JOIN users u ON m.user_id  = u.id LIMIT ? , ?`;
         try {
             const [result] = await connection.execute(statement, [offset, limit]);
             return result

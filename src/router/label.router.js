@@ -9,7 +9,7 @@ const labelRouter = new Router({
 });
 
 labelRouter.get("/", verifyAuth, createLabel);
-labelRouter.get("/page", labelList);
+labelRouter.get("/list", labelList);
 
 
 module.exports = labelRouter;

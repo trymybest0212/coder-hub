@@ -26,7 +26,9 @@ class MomentService {
         // 将动态和评论单独分接口返回
         const statement = `SELECT m.id id, m.content content, m.createAt createTime, m.updateAt updateTime,
         JSON_OBJECT('id',u.id,'name',u.name) user,
-        IF(COUNT(l.id), JSON_ARRAYAGG(JSON_OBJECT('id',l.id,'name',l.name)) ,NULL) labels
+        IF(COUNT(l.id), JSON_ARRAYAGG(JSON_OBJECT('id',l.id,'name',l.name)) ,NULL) labels,
+        (SELECT JSON_ARRAYAGG(CONCAT('http://localhost:8000/moment/images/',files.filename))
+        FROM files where m.id = files.moment_id) images
         FROM moments m  
 LEFT JOIN users u ON m.user_id  = u.id
 LEFT JOIN moment_labels ml ON ml.moment_id  = m.id 

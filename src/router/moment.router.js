@@ -10,7 +10,8 @@ const {
     momentList,
     momentUpdate,
     removeMoment,
-    addMomentLabel
+    addMomentLabel,
+    getFileInfo
 } = require('../controller/moment.controller')
 const {verifyLabel} = require('../middleware/label.middleware')
 
@@ -25,5 +26,7 @@ momentRouter.patch("/:momentId",verifyAuth,verifyPermission('moments'),momentUpd
 momentRouter.delete("/:momentId",verifyAuth,verifyPermission('moments'),removeMoment)
 
 momentRouter.post('/:momentId/labels',verifyAuth,verifyPermission('moments'),verifyLabel,addMomentLabel)
+
+momentRouter.get('/images/:filename', getFileInfo)
 
 module.exports = momentRouter;
